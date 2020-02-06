@@ -2,10 +2,6 @@ package com.atm.main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-import javax.swing.JOptionPane;
 
 public class sqlConnector {
 	Connection con=null;

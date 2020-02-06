@@ -16,10 +16,10 @@ public class checkingMoney extends atmMoney {
 		}
 	}
 
-	public void selectiveMoney(int a) {
-		int h = 0;
-		int f = 0;
-		int t = 0;
+	public boolean selectiveMoney(int a) {
+		int hundreds = 0;
+		int fiveHundres = 0;
+		int twoThousands = 0;
 		x=getX();
 		y=getY();
 		z=getZ();
@@ -29,23 +29,43 @@ public class checkingMoney extends atmMoney {
 					System.err.println("ATM cash Limit exceeds");
 				} else {
 					if (a >= 2000 && x > 0) {
-						t = a / 2000;
+						twoThousands = a / 2000;
 					}
 					if (a >= 500 && y > 0) {
-						f = (a - (t * 2000)) / 500;
+						fiveHundres = (a - (twoThousands * 2000)) / 500;
 					}
 					if (a >= 100 && z > 0) {
-						h = ((a - (t * 2000)) - (f * 500)) / 100;
+						hundreds = ((a - (twoThousands * 2000)) - (fiveHundres * 500)) / 100;
 					}
 				}
 			
 		} else {
 			System.err.println("insuficent money in ATM");
+			return false;
 		}
-		x = t;
-		y = f;
-		z = h;
-		total = (t * 2000) + (f * 500) + (h * 100);
-		lessmoney(x, y, z, total);
+//		x = twoThousands;
+//		y = fiveHundres;
+//		z = hundreds;
+		total = (twoThousands * 2000) + (fiveHundres * 500) + (hundreds * 100);
+		if(x>=twoThousands&&y>=fiveHundres&&z>=hundreds) {
+		lessmoney(twoThousands, fiveHundres, hundreds, total);
+		}else {
+			System.err.println("insuficent money in ATM");
+			return false;
+		}
+		return true;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

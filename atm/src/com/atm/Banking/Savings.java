@@ -60,20 +60,24 @@ public class Savings extends banking implements accounts {
 		if (withdraw % 100 == 0) {
 
 			if (balance >= withdraw) {
-				cm.selectiveMoney(withdraw);
-				this.withdraw = withdraw;
-				this.balance -= this.withdraw;
-				String query = "update bankaccount set savingbalance=" + balance + " where userid=" + getUserid() + "";
-				try {
-					PreparedStatement pst = con.prepareStatement(query);
-					pst.execute();
-					miniStatement.transaction(-this.withdraw, 1, getUserid());
-					System.out.println("available balance :" + balance);
-				} catch (SQLException e) {
-					e.printStackTrace();
+				if (cm.selectiveMoney(withdraw)) {
+					this.withdraw = withdraw;
+					this.balance -= this.withdraw;
+					String query = "update bankaccount set savingbalance=" + balance + " where userid=" + getUserid()
+							+ "";
+					try {
+						PreparedStatement pst = con.prepareStatement(query);
+						pst.execute();
+						miniStatement.transaction(-this.withdraw, 1, getUserid());
+						System.out.println("available balance :" + balance);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				} else {
+					System.out.println("\t\nInsufcient balance\n");
 				}
 			} else {
-				System.out.println("\t\nInsufcient balance\n");
+				System.err.println("insuficent money in ATM");
 			}
 		} else {
 			System.err.println("please enter the amount in multiple of 2000,500,100");
